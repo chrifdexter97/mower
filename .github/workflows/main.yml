@@ -1,0 +1,20 @@
+name: main workflow
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  commitlint:
+    name: commit validation
+    uses: ./.github/workflows/commitlint.yml
+
+  checkov:
+    name: checkov sast test
+    uses: ./.github/workflows/checkov.yml
+
+  ci_java:
+    needs: [commitlint, checkov]
+    if: github.event_name == 'pull_request'
+    name: CI backend
+    uses: ./.github/workflows/ci-java.yml

@@ -1,0 +1,17 @@
+on:
+  workflow_call:
+
+jobs:
+  checkov:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Checkov
+        run: |
+          pip install checkov
+      - run: |
+          checkov -d . -o cli -o junitxml --output-file-path console,results.xml -s || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: checkov-results
+          path: results.xml
