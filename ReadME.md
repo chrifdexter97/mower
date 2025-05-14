@@ -35,3 +35,8 @@ and to have a generated static web page report run:
 mvn clean verify checkstyle:checkstyle
 ``` 
 the report will be located under **target/reports/**.
+
+# Github actions
+This project makes use of **Github Actions** native CICD solution to launch a minimalist cicd pipeline.
+
+More details are available under **actions** tab of the project.
