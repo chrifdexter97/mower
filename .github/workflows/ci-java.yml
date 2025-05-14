@@ -1,0 +1,35 @@
+name: CI Java
+
+on:
+  workflow_call:
+
+jobs:
+
+  maven-build:
+    name: Backend Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '22'
+
+      - run: |
+          mvn clean install
+  
+  checkstyle:
+    needs: maven-build
+    name: Run checkstyle test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '22'
+
+      - run: |
+          mvn checkstyle:check --fail-at-end
